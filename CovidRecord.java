@@ -16,6 +16,7 @@
 
 // FIPS county codes:
 // https://en.wikipedia.org/wiki/FIPS_county_code
+// https://www.census.gov/prod/techdoc/cbp/cbp95/st-cnty.pdf
 
 
 public class CovidRecord
@@ -70,7 +71,8 @@ public class CovidRecord
         {
         // If there are things like escaped quote
         // characters like \" then this part would
-        // have to handle that too.
+        // have to be more complicated in order to
+        // handle that too.
         if( isInsideQuote )
           isInsideQuote = false;
         else
@@ -174,17 +176,22 @@ public class CovidRecord
 
   public String makeShowString()
     {
+    double deathRatio = 0;
+    if( Confirmed > 0 )
+      deathRatio = (double)Deaths / (double)Confirmed;
+
     String result = "FIPS: " + FIPS + "\n" +
               "County: " + Admin2 + "\n" +
               "State: " + Province_State + "\n" +
-              "Country: " + Country_Region + "\n" +
-              "Updated: " + Last_Update + "\n" +
+              "Country/Region: " + Country_Region + "\n" +
+              // "Updated: " + Last_Update + "\n" +
               // Latitude
               // Longitude
+              "Ratio: " + deathRatio + "\n" +
               "Confirmed: " + Confirmed + "\n" +
-              "Deaths: " + Deaths + "\n" +
-              "Recovered: " + Recovered + "\n" +
-              "Active: " + Active + "\n\n";
+              "Deaths: " + Deaths + "\n\n";
+              // "Recovered: " + Recovered + "\n" +
+              // "Active: " + Active + "\n\n";
 
     return result;
     }
