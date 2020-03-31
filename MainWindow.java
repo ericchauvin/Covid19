@@ -2,8 +2,6 @@
 
 
 
-
-
 import javax.swing.JFrame;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -578,11 +576,24 @@ private void editPaste()
     {
     try
     {
+    String mainDir = "C:\\Eric\\Covid19\\";
+    String fileName = mainDir + "Covid19Data.txt";
+    String fileNamePrev = mainDir + "Covid19DataPrev.txt";
 
     CovidRecordArray recArray = new CovidRecordArray(
                                              mApp );
 
-    recArray.readFromFiles();
+    CovidRecordArray recArrayPrev = new
+                             CovidRecordArray( mApp );
+
+    recArray.readFromFile( fileName );
+    recArrayPrev.readFromFile( fileNamePrev );
+
+    recArray.setChangeValues( recArrayPrev );
+
+    // sortByFips();
+    recArray.sortByDeaths();
+    recArray.showRecords();
 
     }
     catch( Exception e )
