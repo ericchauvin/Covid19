@@ -143,12 +143,43 @@ public class CovidRecordArray
 
 
 
-  public void readAndShowRecords( String fileName )
+  public void setChangeValues( CovidRecordArray prev )
     {
-    readFromFile( fileName );
-    // sortByFips();
-    sortByDeaths();
-    showRecords();
+    sortByFips();
+    prev.sortByFips();
+    if( arrayLast != prev.arrayLast )
+      {
+      // The number of counties shouldn't change.
+      // Not normally.
+      mApp.showStatus( "Why aren't these the same for lastArray?" );
+      return;
+      }
+
+    for( int count = 0; count < arrayLast; count++ )
+      {
+      CovidRecord rec = covidRecArray[
+                        sortIndexArray[count]];
+
+      CovidRecord prevRec = prev.covidRecArray[
+                        prev.sortIndexArray[count]];
+
+      if( !rec.FIPS.equals( prevRec.FIPS ))
+        {
+        mApp.showStatus( "These FIPS values should be the same." );
+        return;
+        }
+
+      // These are references to the original objects.
+      rec.ConfirmedChange = rec.Confirmed -
+                            prevRec.Confirmed;
+
+      rec.DeathsChange = rec.Deaths -
+                         prevRec.Deaths;
+
+      }
+
+
+
     }
 
 
