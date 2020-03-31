@@ -64,15 +64,15 @@ public class CovidRecordArray
     }
 
 
-/*
-  public void sort()
+
+  public void sortByFips()
     {
     if( arrayLast < 2 )
       return;
 
     for( int count = 0; count < arrayLast; count++ )
       {
-      if( !bubbleSortOnePass() )
+      if( !bubbleSortOnePassFips() )
         break;
 
       }
@@ -80,7 +80,7 @@ public class CovidRecordArray
 
 
 
-  private boolean bubbleSortOnePass()
+  private boolean bubbleSortOnePassFips()
     {
     // This returns true if it swaps anything.
 
@@ -88,8 +88,10 @@ public class CovidRecordArray
     for( int count = 0; count < (arrayLast - 1); count++ )
       {
       // compareTo() uses case.
-      if( valueArray[count].compareToIgnoreCase(
-                        valueArray[count + 1] ) > 0 )
+      if( covidRecArray[sortIndexArray[count]].FIPS.
+             compareToIgnoreCase(
+             covidRecArray[sortIndexArray[count + 1]].
+             FIPS ) > 0 )
         {
         int temp = sortIndexArray[count];
         sortIndexArray[count] = sortIndexArray[count + 1];
@@ -100,18 +102,81 @@ public class CovidRecordArray
 
     return switched;
     }
-*/
 
 
 
-  public void readFromFiles()
+  public void sortByDeaths()
+    {
+    if( arrayLast < 2 )
+      return;
+
+    for( int count = 0; count < arrayLast; count++ )
+      {
+      if( !bubbleSortOnePassDeaths() )
+        break;
+
+      }
+    }
+
+
+
+  private boolean bubbleSortOnePassDeaths()
+    {
+    // This returns true if it swaps anything.
+
+    boolean switched = false;
+    for( int count = 0; count < (arrayLast - 1); count++ )
+      {
+      if( covidRecArray[sortIndexArray[count]].Deaths
+             < covidRecArray[
+               sortIndexArray[count + 1]].Deaths )
+        {
+        int temp = sortIndexArray[count];
+        sortIndexArray[count] = sortIndexArray[count + 1];
+        sortIndexArray[count + 1] = temp;
+        switched = true;
+        }
+      }
+
+    return switched;
+    }
+
+
+
+  public void readAndShowRecords( String fileName )
+    {
+    readFromFile( fileName );
+    // sortByFips();
+    sortByDeaths();
+    showRecords();
+    }
+
+
+
+  public void showRecords()
+    {
+    for( int count = 0; count < arrayLast; count++ )
+      {
+      CovidRecord rec = covidRecArray[
+                        sortIndexArray[count]];
+
+      // if( rec.Deaths < 10 )
+        // continue;
+
+      if( (rec.Deaths == 0) &&
+          (rec.Confirmed == 0) )
+        continue;
+
+      mApp.showStatus( rec.makeShowString());
+      }
+    }
+
+
+
+  public void readFromFile( String fileName )
     {
     try
     {
-    String mainDir = "C:\\Eric\\Covid19\\";
-
-    String fileName = mainDir + "Covid19Data.txt";
-
     String dataS = FileUtility.readFileToString(
                                         mApp,
                                         fileName,
@@ -144,15 +209,8 @@ public class CovidRecordArray
       if( !rec.setFieldsFromFileLine( line ))
         continue;
 
-       if( (rec.Deaths == 0) &&
-           (rec.Confirmed == 0) )
-         continue;
-
-       // Show only the ones where deaths == confirmed.
-       // if( rec.Deaths < rec.Confirmed )
-         // continue;
-      
       // Just look at US county records.
+      // In Louisiana a Parish is like a county.
       if( rec.FIPS.length() < 5)
         continue;
 
@@ -192,14 +250,6 @@ public class CovidRecordArray
       totalDeaths += rec.Deaths;
       totalConfirmed += rec.Confirmed;
       totalRecords++;
-
-      if( rec.Deaths < 10 )
-        continue;
-
-      // if( rec.Province_State.equals( "Colorado" ))
-        // continue;
-      
-      mApp.showStatus( rec.makeShowString());
       addRecord( rec );
       }
 
@@ -215,10 +265,9 @@ public class CovidRecordArray
                         (double)totalConfirmed;
 
     mApp.showStatus( "Death ratio: " + deathRatio );
-
     mApp.showStatus( " " );
-    mApp.showStatus( "Finished processing the file." );
-    mApp.showStatus( " " );
+    // mApp.showStatus( "Finished processing the file." );
+    // mApp.showStatus( " " );
     }
     catch( Exception e )
       {
