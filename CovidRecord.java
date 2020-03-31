@@ -1,8 +1,13 @@
 // Copyright Eric Chauvin 2020.
 
 
-// Do a previous data file and the change amounts.
-// Sort by change amounts.
+
+// This Covid 19 data comes from Johns Hopkins.
+// It's the CSV text files for daily reports.
+// Get data files from:
+// https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports
+// Press the "Raw" button and then just copy and 
+// paste the data to a text file.
 
 
 // FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths,Recovered,Active,Combined_Key
@@ -21,8 +26,8 @@ public class CovidRecord
   public String Province_State = "";
   public String Country_Region = "";
   String Last_Update = "";
-  public float Latitude;
-  public float Longitude;
+  public double Latitude;
+  public double Longitude;
   public int Confirmed;
   public int Deaths;
   public int Recovered;
@@ -41,11 +46,11 @@ public class CovidRecord
     }
 
 
-  public CovidRecord( MainApp useApp, String in )
+  public CovidRecord( MainApp useApp )
     {
     mApp = useApp;
-
     }
+
 
 
   public boolean setFieldsFromFileLine( String in )
@@ -78,7 +83,7 @@ public class CovidRecord
         {
         if( testC == ',' )
           {
-          String fieldS = sBuilder.toString();
+          String fieldS = sBuilder.toString().trim();
           sBuilder.setLength( 0 );
           setFieldByIndex( field, fieldS );
           field++;
@@ -121,11 +126,11 @@ public class CovidRecord
         return true;
      
       case 5:
-        Latitude = Float.parseFloat( in );
+        Latitude = Double.parseDouble( in );
         return true;
      
       case 6:
-        Longitude = Float.parseFloat( in );
+        Longitude = Double.parseDouble( in );
         return true;
      
       case 7:
@@ -167,5 +172,23 @@ public class CovidRecord
 
 
 
-  }
+  public String makeShowString()
+    {
+    String result = "FIPS: " + FIPS + "\n" +
+              "County: " + Admin2 + "\n" +
+              "State: " + Province_State + "\n" +
+              "Country: " + Country_Region + "\n" +
+              "Updated: " + Last_Update + "\n" +
+              // Latitude
+              // Longitude
+              "Confirmed: " + Confirmed + "\n" +
+              "Deaths: " + Deaths + "\n" +
+              "Recovered: " + Recovered + "\n" +
+              "Active: " + Active + "\n\n";
 
+    return result;
+    }
+
+
+
+  }
