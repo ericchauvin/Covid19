@@ -1,10 +1,6 @@
 // Copyright Eric Chauvin 2019 - 2020.
 
 
-// This Covid 19 data comes from Johns Hopkins.
-// It's the CSV text files for daily reports.
-// Get data files from:
-// https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports
 
 
 
@@ -582,28 +578,12 @@ private void editPaste()
     {
     try
     {
-    String mainDir = "C:\\Eric\\Covid19\\";
 
-    String fileName = mainDir + "Covid19Data.txt";
+    CovidRecordArray recArray = new CovidRecordArray(
+                                             mApp );
 
-    String dataS = FileUtility.readFileToString(
-                                        mApp,
-                                        fileName,
-                                        false );
+    recArray.readFromFiles();
 
-    if( dataS.length() == 0 )
-      {
-      showStatus( " " );
-      showStatus( "There is nothing in the file." );
-      showStatus( fileName );
-      return;
-      }
-
-    showStatus( dataS );
-
-    showStatus( " " );
-    showStatus( "Finished processing the file." );
-    showStatus( " " );
     }
     catch( Exception e )
       {
@@ -616,4 +596,3 @@ private void editPaste()
 
 
   }
-
