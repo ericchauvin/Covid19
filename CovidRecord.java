@@ -36,8 +36,8 @@ public class CovidRecord
   public String CombinedKey = "";
   public int ConfirmedChange;
   public int DeathsChange;
-  public int RecoveredChange;
-  public int ActiveChange;
+  // public int RecoveredChange;
+  // public int ActiveChange;
 
 
 
@@ -189,9 +189,9 @@ public class CovidRecord
               // Longitude
               "Ratio: " + deathRatio + "\n" +
               "Confirmed: " + Confirmed + "\n" +
-              "Deaths: " + Deaths + "\n\n";
-              // "Recovered: " + Recovered + "\n" +
-              // "Active: " + Active + "\n\n";
+              "Deaths: " + Deaths + "\n" +
+              "Confirmed Change: " + ConfirmedChange + "\n" +
+              "Deaths Change: " + DeathsChange + "\n";
 
     return result;
     }
