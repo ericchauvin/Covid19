@@ -2,9 +2,6 @@
 
 
 
-// Do a previous data file and the change amounts.
-
-
 public class CovidRecordArray
   {
   private MainApp mApp;
@@ -68,7 +65,6 @@ public class CovidRecordArray
 
 
 /*
-Sort by change, by totals... whatever.
   public void sort()
     {
     if( arrayLast < 2 )
@@ -135,7 +131,9 @@ Sort by change, by totals... whatever.
     int max = sArray.makeFieldsFromString( dataS,
                                            '\n' );
 
+    int totalRecords = 0;
     int totalDeaths = 0;
+    int totalConfirmed = 0;
     for( int count = 0; count < max; count++ )
       {
       String line = sArray.getStringAt( count );
@@ -145,19 +143,78 @@ Sort by change, by totals... whatever.
       CovidRecord rec = new CovidRecord( mApp );
       if( !rec.setFieldsFromFileLine( line ))
         continue;
+
+       if( (rec.Deaths == 0) &&
+           (rec.Confirmed == 0) )
+         continue;
+
+       // Show only the ones where deaths == confirmed.
+       // if( rec.Deaths < rec.Confirmed )
+         // continue;
       
-      if( rec.FIPS.length() == 0 )
+      // Just look at US county records.
+      if( rec.FIPS.length() < 5)
         continue;
 
-      totalDeaths += rec.Deaths;
-      if( rec.Province_State.equals( "Colorado" ))
-        mApp.showStatus( rec.makeShowString());
+      // Colorado:
+      // if( !rec.FIPS.startsWith( "08" ))
+        // continue;
 
+      // District of Columbia is FIPS: 11001
+      // if( !rec.FIPS.startsWith( "11" ))
+        // continue;
+
+      // FIPS: 60000 American Samoa
+      // FIPS: 66000 Guam
+      // FIPS: 69000 Northern Mariana Islands
+      if( rec.FIPS.startsWith( "6" ))
+        continue;
+
+      // FIPS: 78000 Virgin Islands
+      if( rec.FIPS.startsWith( "7" ))
+        continue;
+
+      // FIPS: 88888 Diamond Princess cruise ship.
+      if( rec.FIPS.startsWith( "8" ))
+        continue;
+
+      // FIPS: 99999 Grand Princess cruise ship
+      if( rec.FIPS.startsWith( "9" ))
+        continue;
+
+      // Statewide is not a county.
+      if( rec.FIPS.endsWith( "999" ))
+        continue;
+
+      // if( !rec.Country_Region.equals( "US" ))
+        // continue;
+
+      totalDeaths += rec.Deaths;
+      totalConfirmed += rec.Confirmed;
+      totalRecords++;
+
+      if( rec.Deaths < 10 )
+        continue;
+
+      // if( rec.Province_State.equals( "Colorado" ))
+        // continue;
+      
+      mApp.showStatus( rec.makeShowString());
       addRecord( rec );
       }
 
     mApp.showStatus( " " );
+    // Wikipedia says there are "3,142 counties
+    // and county-equivalents".
+    mApp.showStatus( "Total records: " + totalRecords );
     mApp.showStatus( "Total deaths: " + totalDeaths );
+    mApp.showStatus( "Total confirmed: " +
+                                  totalConfirmed );
+
+    double deathRatio = (double)totalDeaths /
+                        (double)totalConfirmed;
+
+    mApp.showStatus( "Death ratio: " + deathRatio );
 
     mApp.showStatus( " " );
     mApp.showStatus( "Finished processing the file." );
