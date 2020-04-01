@@ -221,7 +221,8 @@ public class CovidRecordArray
       return;
       }
 
-    // mApp.showStatus( dataS );
+    mApp.showStatus( fileName );
+    mApp.showStatus( " " );
 
     StringArray sArray = new StringArray();
     int max = sArray.makeFieldsFromString( dataS,
@@ -284,7 +285,7 @@ public class CovidRecordArray
       addRecord( rec );
       }
 
-    mApp.showStatus( " " );
+    // mApp.showStatus( " " );
     // Wikipedia says there are "3,142 counties
     // and county-equivalents".
     mApp.showStatus( "Total records: " + totalRecords );
@@ -295,7 +296,8 @@ public class CovidRecordArray
     double deathRatio = (double)totalDeaths /
                         (double)totalConfirmed;
 
-    mApp.showStatus( "Death ratio: " + deathRatio );
+    String val = String.format( "%,.3f", deathRatio );
+    mApp.showStatus( "Death ratio: " + val );
     mApp.showStatus( " " );
     // mApp.showStatus( "Finished processing the file." );
     // mApp.showStatus( " " );
