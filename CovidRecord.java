@@ -180,6 +180,8 @@ public class CovidRecord
     if( Confirmed > 0 )
       deathRatio = (double)Deaths / (double)Confirmed;
 
+    String val = String.format( "%,.3f", deathRatio );
+
     String result = "FIPS: " + FIPS + "\n" +
               "County: " + Admin2 + "\n" +
               "State: " + Province_State + "\n" +
@@ -187,7 +189,7 @@ public class CovidRecord
               // "Updated: " + Last_Update + "\n" +
               // Latitude
               // Longitude
-              "Ratio: " + deathRatio + "\n" +
+              "Ratio: " + val + "\n" +
               "Confirmed: " + Confirmed + "\n" +
               "Deaths: " + Deaths + "\n" +
               "Confirmed Change: " + ConfirmedChange + "\n" +
