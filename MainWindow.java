@@ -580,6 +580,29 @@ private void editPaste()
     String fileName = mainDir + "Covid19Data.txt";
     String fileNamePrev = mainDir + "Covid19DataPrev.txt";
 
+    // Read from a file that has a full set of data.
+    // Like this one from 3-28-2020:
+    // https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/03-28-2020.csv
+
+    String fileNameAllRecords = mainDir +
+                          "Covid19DataAllRecords.txt";
+
+
+    CovidDictionary covidDict = new CovidDictionary( mApp );
+    covidDict.readAllRecordsFile( fileNameAllRecords );
+    covidDict.readUpdateFile( fileNamePrev );
+    covidDict.readUpdateFile( fileName );
+    // covidDict.showKeysValues();
+    covidDict.setDisplayArray();
+    // covidDict.sortByConfirmed();
+    covidDict.sortByDeaths();
+    covidDict.showDisplayRecords();
+
+
+
+
+
+/*
     CovidRecordArray recArray = new CovidRecordArray(
                                              mApp );
 
@@ -588,12 +611,13 @@ private void editPaste()
 
     recArray.readFromFile( fileName );
     recArrayPrev.readFromFile( fileNamePrev );
+*/
 
-    recArray.setChangeValues( recArrayPrev );
 
     // sortByFips();
-    recArray.sortByDeaths();
-    recArray.showRecords();
+    // recArray.sortByDeaths();
+    // recArray.sortByConfirmed();
+    // recArray.showRecords();
 
     }
     catch( Exception e )
