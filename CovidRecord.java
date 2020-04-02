@@ -87,7 +87,12 @@ public class CovidRecord
           {
           String fieldS = sBuilder.toString().trim();
           sBuilder.setLength( 0 );
-          setFieldByIndex( field, fieldS );
+          if( !setFieldByIndex( field, fieldS ))
+            {
+            // mApp.showStatus( "Fields: " + in );
+            return false;
+            }
+
           field++;
           continue;
           }
@@ -95,6 +100,10 @@ public class CovidRecord
 
       sBuilder.append( testC );
       }
+
+    String lastS = sBuilder.toString().trim();
+    if( lastS.length() > 0 )
+      setFieldByIndex( field, lastS );
 
     return true;
     }
@@ -105,6 +114,9 @@ public class CovidRecord
     {
     try
     {
+    if( in.length() == 0 )
+      return true;
+
     switch( index )
       {
       case 0:   
@@ -157,7 +169,7 @@ public class CovidRecord
 
       case 12:
         mApp.showStatus( "What is this field? " + in );
-        return false;
+        return true;
 
       // default:
       }
@@ -174,7 +186,29 @@ public class CovidRecord
 
 
 
-  public String makeShowString()
+  public void update( CovidRecord in )
+    {
+    // FIPS
+    // Admin2
+    // Province_State
+    // Country_Region
+    Last_Update = in.Last_Update;
+    // Latitude
+    // Longitude
+
+    ConfirmedChange = in.Confirmed - Confirmed;
+    DeathsChange = in.Deaths - Deaths;
+
+    Confirmed = in.Confirmed;
+    Deaths = in.Deaths;
+    // Recovered
+    // Active
+    // CombinedKey
+    }
+
+
+
+  public String makeKeysValuesString()
     {
     double deathRatio = 0;
     if( Confirmed > 0 )
@@ -182,18 +216,19 @@ public class CovidRecord
 
     String val = String.format( "%,.3f", deathRatio );
 
-    String result = "FIPS: " + FIPS + "\n" +
-              "County: " + Admin2 + "\n" +
-              "State: " + Province_State + "\n" +
-              "Country/Region: " + Country_Region + "\n" +
-              // "Updated: " + Last_Update + "\n" +
+    String result = "Key: " + CombinedKey + "\n" +
+              "FIPS: " + FIPS + "\n" +
+              // "County: " + Admin2 + "\n" +
+              // "State: " + Province_State + "\n" +
+              // "Country/Region: " + Country_Region + "\n" +
+              "Updated: " + Last_Update + "\n" +
               // Latitude
               // Longitude
               "Ratio: " + val + "\n" +
               "Confirmed: " + Confirmed + "\n" +
               "Deaths: " + Deaths + "\n" +
               "Confirmed Change: " + ConfirmedChange + "\n" +
-              "Deaths Change: " + DeathsChange + "\n";
+              "Deaths Change: " + DeathsChange + "\n\n";
 
     return result;
     }
