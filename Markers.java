@@ -28,33 +28,6 @@
 
   public class Markers
   {
-/*
-  public static final char EscapedSingleQuote =
-                                       (char)0x2700;
-  public static final char EscapedDoubleQuote =
-                                       (char)0x2701;
-  public static final char Begin = (char)0x2702;
-  public static final char End = (char)0x2703;
-  public static final char TypeString = (char)0x2704;
-  public static final char TypeChar = (char)0x2705;
-  public static final char TypeNumber = (char)0x2706;
-  public static final char TypeIdentifier = (char)0x2707;
-  public static final char ErrorPoint = (char)0x2708;
-  public static final char TypeLineNumber = (char)0x2709;
-  public static final char SlashStar = (char)0x270A;
-  public static final char StarSlash = (char)0x270B;
-  public static final char DoubleSlash = (char)0x270C;
-  public static final char TypeOperator = (char)0x270D;
-  public static final char EscapedSlash = (char)0x270E;
-  public static final char QuoteAsSingleCharacter =
-                                         (char)0x270F;
-  public static final char TypePreprocessor =
-                                         (char)0x2710;
-  // public static final char TypeBeginPreproc =
-  //                                       (char)0x2711;
-  // public static final char TypeEndPreproc =
-  //                                       (char)0x2712;
-*/
 
 
 
@@ -75,4 +48,3 @@
 
 
   }
-
