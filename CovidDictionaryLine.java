@@ -102,10 +102,8 @@ public class CovidDictionaryLine
     if( arrayLast < 1 )
       return -1;
 
-    key = key.toLowerCase();
     for( int count = 0; count < arrayLast; count++ )
       {
-      // compareTo() uses case.
       if( keyArray[count].equals( key ) )
         return count;
 
@@ -116,7 +114,7 @@ public class CovidDictionaryLine
 
 
 
-  public void setRecord( String key, CovidRecord value )
+  private void setRecord( String key, CovidRecord value )
     {
     int index = getIndexOfKey( key );
     if( index >= 0 )
@@ -136,6 +134,20 @@ public class CovidDictionaryLine
 
 
 
+  public void updateRecord( String key, CovidRecord value )
+    {
+    int index = getIndexOfKey( key );
+    if( index >= 0 )
+      {
+      valueArray[index].update( value );
+      }
+    else
+      {
+      setRecord( key, value );
+      }
+    }
+
+
 
   public CovidRecord getRecord( String key )
     {
@@ -143,6 +155,7 @@ public class CovidDictionaryLine
     if( index < 0 )
       return null;
 
+    // Return a reference to this record.
     return valueArray[index];
     }
 
@@ -159,7 +172,6 @@ public class CovidDictionaryLine
 
 
 
-/*
   public String makeKeysValuesString()
     {
     if( arrayLast < 1 )
@@ -170,9 +182,10 @@ public class CovidDictionaryLine
     for( int count = 0; count < arrayLast; count++ )
       {
       // Using the sortIndexArray for the sorted order.
-      String oneLine = keyArray[sortIndexArray[count]] +
-                       "\t" +
-                       valueArray[sortIndexArray[count]] +
+      String oneLine = // keyArray[sortIndexArray[count]] +
+                       // "\t" +
+                       valueArray[sortIndexArray[count]].
+                       makeKeysValuesString() +
                        "\n";
 
       sBuilder.append( oneLine );
@@ -180,7 +193,21 @@ public class CovidDictionaryLine
 
     return sBuilder.toString();
     }
-*/
+
+
+
+  public CovidRecord getRecordAt( int index )
+    {
+    if( index < 0 )
+      return null;
+
+    if( index >= arrayLast )
+      return null;
+
+    // Return a reference to this record.
+    return valueArray[index];
+    }
+
 
 
   }
