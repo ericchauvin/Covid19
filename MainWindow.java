@@ -594,8 +594,8 @@ private void editPaste()
     covidDict.readUpdateFile( fileName );
     // covidDict.showKeysValues();
     covidDict.setDisplayArray();
-    // covidDict.sortByConfirmed();
-    covidDict.sortByDeaths();
+    covidDict.sortByConfirmed();
+    // covidDict.sortByDeaths();
     covidDict.showDisplayRecords();
 
 
