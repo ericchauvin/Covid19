@@ -267,6 +267,7 @@ public class CovidDictionary
 
   public void showDisplayRecords()
     {
+    // int howMany = 0;
     for( int count = 0; count < arrayLast; count++ )
       {
       CovidRecord rec = covidRecArray[
@@ -279,9 +280,21 @@ public class CovidDictionary
           (rec.Confirmed == 0) )
         continue;
 
+      // if( rec.Confirmed < 1 )
+        // continue;
+
+      // if( rec.Confirmed > 30 )
+        // continue;
+
+      // howMany++;
+
       mApp.showStatus( rec.makeKeysValuesString());
       }
+
+    // mApp.showStatus( " " );
+    // mApp.showStatus( "How many: " + howMany );
     }
+
 
 
 
