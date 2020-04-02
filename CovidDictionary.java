@@ -538,4 +538,44 @@ public class CovidDictionary
 
 
 
+  public void sortByFips()
+    {
+    if( arrayLast < 2 )
+      return;
+
+    for( int count = 0; count < arrayLast; count++ )
+      {
+      if( !bubbleSortOnePassFips() )
+        break;
+
+      }
+    }
+
+
+
+  private boolean bubbleSortOnePassFips()
+    {
+    // This returns true if it swaps anything.
+
+    boolean switched = false;
+    for( int count = 0; count < (arrayLast - 1); count++ )
+      {
+      // compareTo() uses case.
+      if( covidRecArray[sortIndexArray[count]].FIPS.
+             compareToIgnoreCase(
+             covidRecArray[sortIndexArray[count + 1]].
+             FIPS ) > 0 )
+        {
+        int temp = sortIndexArray[count];
+        sortIndexArray[count] = sortIndexArray[count + 1];
+        sortIndexArray[count + 1] = temp;
+        switched = true;
+        }
+      }
+
+    return switched;
+    }
+
+
+
   }
